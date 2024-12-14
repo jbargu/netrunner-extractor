@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "netrunner-extractor"
+version = "0.1.0"
+description = ""
+authors = ["jbargu"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pypdf = {extras = ["image"], version = "^4.3.1"}
+ipython = "^8.27.0"
+opencv-python = "^4.10.0.84"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
