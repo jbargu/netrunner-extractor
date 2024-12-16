@@ -3,7 +3,7 @@ from PIL import Image
 import os, cv2
 
 # PDF obtained from https://access.nullsignal.games/Gateway/English/English/SystemGatewayEnglish-A4%20Printable%20Sheets%203x.pdf
-reader = PdfReader("./SystemGatewayEnglish-A4 Printable Sheets 3x.pdf")
+reader = PdfReader("./MSBooster-A4-Printable-Sheets-1x-1.pdf")
 
 # page = reader.pages[0]
 count = 1
@@ -38,6 +38,7 @@ def image_is_transparent(image: Image, opaque: int = 255) -> bool:
     return False
 
 
+count = 1
 # Cuts the PDF into separate images, saving the images into "/imgs" folder
 for page in reader.pages:
     for image_file_object in page.images:
@@ -45,28 +46,14 @@ for page in reader.pages:
         with open(img_name, "wb") as fp:
             fp.write(image_file_object.data)
 
+        count += 1
+
         img = Image.open("tmp.png")
         print(img.size)
 
-        # (1, 2)
-        (1461, 1033, 2154, 1033)
-
-        # (2, 2)
-        (1461, 1996, 2154, 2956)
-        for k in range(3):
-            for i in range(3):
-                lower_x = 72 + i * WIDTH + i + (1 if i > 0 else 0)
-                lower_y = 72 + k * HEIGHT + k
-                img_area = (lower_x, lower_y, lower_x + WIDTH, lower_y + HEIGHT)
-                print(img_area)
-
-                img_left = img.crop(img_area)
-                # img_right = img.crop(img_right_area)
-
-                if not image_is_transparent(img_left):
-                    img_left.save(folder_in + str(count) + image_file_object.name)
-                    count += 1
-                # img_right.show()
+        img_area = (1, 1, 505, 706)
+        img_left = img.crop(img_area)
+        img_left.save(folder_in + str(count) + image_file_object.name)
 
 
 # Reads the images from the "/imgs" folder and adds the bleed on both sides
