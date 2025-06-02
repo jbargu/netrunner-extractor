@@ -3,7 +3,9 @@ from PIL import Image
 import os, cv2
 
 # PDF obtained from https://access.nullsignal.games/Gateway/English/English/SystemGatewayEnglish-A4%20Printable%20Sheets%203x.pdf
-reader = PdfReader("./SystemGatewayEnglish-A4 Printable Sheets 3x.pdf")
+reader = PdfReader(
+    "./Liberation-Rebellion-Without-Rehearsal-English-Printable-Sheets-A4-1x.pdf"
+)
 
 # page = reader.pages[0]
 count = 1
@@ -39,13 +41,15 @@ def image_is_transparent(image: Image, opaque: int = 255) -> bool:
 
 
 # Cuts the PDF into separate images, saving the images into "/imgs" folder
-for page in reader.pages:
+for page in reader.pages[1:]:
+    print(page)
     for image_file_object in page.images:
-        img_name = "tmp.png"
+        print(image_file_object)
+        img_name = "tmp.jp2"
         with open(img_name, "wb") as fp:
             fp.write(image_file_object.data)
 
-        img = Image.open("tmp.png")
+        img = Image.open("tmp.jp2")
         print(img.size)
 
         # (1, 2)
@@ -61,12 +65,9 @@ for page in reader.pages:
                 print(img_area)
 
                 img_left = img.crop(img_area)
-                # img_right = img.crop(img_right_area)
-
-                if not image_is_transparent(img_left):
-                    img_left.save(folder_in + str(count) + image_file_object.name)
-                    count += 1
-                # img_right.show()
+                img_left.save(folder_in + str(count) + image_file_object.name)
+                count += 1
+    break
 
 
 # Reads the images from the "/imgs" folder and adds the bleed on both sides
