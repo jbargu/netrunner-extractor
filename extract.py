@@ -65,7 +65,11 @@ for page in reader.pages[1:]:
                 print(img_area)
 
                 img_left = img.crop(img_area)
-                img_left.save(folder_in + str(count) + image_file_object.name)
+                img_left.save(
+                    folder_in
+                    + str(count)
+                    + image_file_object.name.replace("jp2", "png")
+                )
                 count += 1
     break
 
